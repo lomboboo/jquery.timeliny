@@ -19,7 +19,6 @@
 
 		// Extend default options with those supplied by user.
 		options = $.extend({}, $.fn['timeliny'].defaults, options);
-
 		/**
 		 * Initialize plugin.
 		 * @private
@@ -289,18 +288,32 @@
 			}
 
 			// Bind the functions...
-			$el.first().on('mousedown', function() {
-				_drag_init($el.find('.'+ options.className +'-timeline')[0]);
-				return false;
-			});
+			if (options.draggedElement) {
+        $(options.draggedElement).on('mousedown', function() {
+          _drag_init($el.find('.'+ options.className +'-timeline')[0]);
+          return false;
+        });
 
-			$(document).on('mousemove.timeliny', function(e) {
-				_move_elem(e);
-			});
+        $(options.draggedElement).on('mousemove', function(e) {
+          _move_elem(e);
+        });
 
-			$(document).on('mouseup.timeliny', function() {
-				_stop_move();
-			});
+        $(options.draggedElement).on('mouseup', function() {
+          _stop_move();
+        });
+			} else {
+        $el.first().on('mousedown', function() {
+          _drag_init($el.find('.'+ options.className +'-timeline')[0]);
+          return false;
+        });
+        $(document).on('mousemove.timeliny', function(e) {
+          _move_elem(e);
+        });
+
+        $(document).on('mouseup.timeliny', function() {
+          _stop_move();
+        });
+			}
 		}
 
 		/**

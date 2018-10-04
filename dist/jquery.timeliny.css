@@ -38,6 +38,15 @@
     margin: auto;
     width: 100%;
     max-width: 1024px; }
+  .timeliny .timeliny-circle {
+    position: absolute;
+    width: 8px;
+    height: 8px;
+    background-color: #FFD000;
+    opacity: 0;
+    transform: scale(1.6);
+    border-radius: 50%;
+    margin-top: -4px; }
   .timeliny .timeliny-dot {
     -webkit-transition: all 0.35s ease-in-out;
     -moz-transition: all 0.35s ease-in-out;
@@ -63,15 +72,6 @@
       top: -25px;
       left: -10px;
       color: #fff; }
-    .timeliny .timeliny-dot::after {
-      content: '';
-      position: absolute;
-      width: 5px;
-      height: 5px;
-      background-color: #FFD000;
-      opacity: 0;
-      transform: scale(1.6);
-      border-radius: 50%; }
     .timeliny .timeliny-dot:hover {
       background-color: #FFD000; }
   .timeliny .timeliny-timeline {
@@ -85,6 +85,8 @@
       display: block;
       margin-right: 85px;
       position: relative; }
+      .timeliny .timeliny-timeline .timeliny-timeblock.active .timeliny-circle {
+        opacity: 1; }
       .timeliny .timeliny-timeline .timeliny-timeblock.active .timeliny-dot {
         background-color: #FFD000;
         width: 5px;
@@ -92,8 +94,6 @@
         margin-top: -2.5px; }
         .timeliny .timeliny-timeline .timeliny-timeblock.active .timeliny-dot::before {
           color: #fff; }
-        .timeliny .timeliny-timeline .timeliny-timeblock.active .timeliny-dot::after {
-          opacity: 1; }
       .timeliny .timeliny-timeline .timeliny-timeblock.inactive .timeliny-dot {
         cursor: move; }
         .timeliny .timeliny-timeline .timeliny-timeblock.inactive .timeliny-dot::before {

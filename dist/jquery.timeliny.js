@@ -128,7 +128,7 @@
 				var text = $(this).html();
 				var year = $(this).attr('data-year');
 
-				var dotHtml = '<a href="#' + year + '" class="' + options.className + '-dot" data-year="' + year + '" data-text="' + text + '"></a>';
+				var dotHtml = '<a href="#' + year + '" class="' + options.className + '-dot" data-year="' + year + '" data-text="' + text + '"></a><span class="' + options.className + '-circle"></span>';
 
 				$(this).addClass('' + options.className + '-timeblock').html(dotHtml);
 			});

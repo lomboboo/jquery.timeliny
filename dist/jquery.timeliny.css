@@ -44,7 +44,6 @@
     height: 8px;
     background-color: #FFD000;
     opacity: 0;
-    transform: scale(1.6);
     border-radius: 50%;
     margin-top: -4px;
     z-index: -2; }

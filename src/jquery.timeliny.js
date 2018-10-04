@@ -139,8 +139,8 @@
 		 * @private
 		 */
 		function _createVerticalLine() {
-			if (options.disableVerticalLine) return;
-			$el.append('<div class="' + options.className + '-vertical-line"></div>');
+			var style = options.disableVerticalLine ? 'opacity: 0; position:absolute;z-index: -99999;' : '';
+			$el.append('<div class="' + options.className + '-vertical-line" style="'+style+'"></div>');
 		}
 
 		/**

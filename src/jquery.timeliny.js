@@ -139,6 +139,7 @@
 		 * @private
 		 */
 		function _createVerticalLine() {
+			if (options.disableVerticalLine) return;
 			$el.append('<div class="' + options.className + '-vertical-line"></div>');
 		}
 

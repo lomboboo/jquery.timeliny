@@ -73,7 +73,7 @@ $timeliny_small-breakdown: 768px;
 		display: block;
 		position: absolute;
 		top: 50%;
-		left: 0;
+		left: 1.5px;
 		margin-top: -$timeliny_dots-radius;
 		width: $timeliny_dots-radius * 2;
 		height: $timeliny_dots-radius * 2;
@@ -96,27 +96,14 @@ $timeliny_small-breakdown: 768px;
 		}
 
 		&::after {
-			display: none;
-			-webkit-transition: all $timeliny_transition-time ease-in-out;
-			-moz-transition: all $timeliny_transition-time ease-in-out;
-			transition: all $timeliny_transition-time ease-in-out;
-
-			-ms-transform: translateY(-50%);
-			-webkit-transform: translateY(-50%);
-			transform: translateY(-50%);
-
-			content: attr(data-text);
+			content: '';
 			position: absolute;
-			width: $timeliny_max-inner-width / 4;
-			top: $timeliny_spacings + $timeliny_dots-radius;
-			left: $timeliny_spacings / 4;
-			color: $timeliny_base-color;
+			width: $timeliny_dots-radius * 2;
+			height: $timeliny_dots-radius * 2;
+			background-color: $timeliny_active-color;
 			opacity: 0;
-			font-size: 0.9em;
-
-			@media (min-width: $timeliny_small-breakdown) {
-				width: $timeliny_max-inner-width / 3;
-			}
+			transform: scale(1.6);
+			border-radius: 50%;
 		}
 
 		&:hover {
@@ -140,21 +127,15 @@ $timeliny_small-breakdown: 768px;
 			&.active {
 				.#{$timeliny_classname}-dot {
 					background-color: $timeliny_active-color;
-					width: $timeliny_dots-radius * 2 + 3px;
-					height: $timeliny_dots-radius * 2 + 3px;
-					margin-top: -$timeliny_dots-radius - 1.5px;
-					-webkit-box-shadow: 1px 1px 4px 0px rgba(0,0,0,0.33);
-					-moz-box-shadow: 1px 1px 4px 0px rgba(0,0,0,0.33);
-					box-shadow: 1px 1px 4px 0px rgba(0,0,0,0.33);
-					left: 0;
+					width: $timeliny_dots-radius * 2;
+					height: $timeliny_dots-radius * 2;
+					margin-top: -$timeliny_dots-radius;
 
 					&::before {
 						color: $timeliny_base-color;
-						top: -23px;
 					}
 
 					&::after {
-						color: $timeliny_text-color;
 						opacity: 1;
 					}
 				}
@@ -192,7 +173,6 @@ $timeliny_small-breakdown: 768px;
 	.#{$timeliny_classname}-vertical-line {
 		position: absolute;
 		display: block;
-		opacity: 0;
 		z-index: 1;
 		left: $timeliny_vertical-line-pos / 2;
 		top: 0;

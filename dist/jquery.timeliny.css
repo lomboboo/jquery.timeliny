@@ -45,7 +45,7 @@
     display: block;
     position: absolute;
     top: 50%;
-    left: 0;
+    left: 1.5px;
     margin-top: -2.5px;
     width: 5px;
     height: 5px;
@@ -64,24 +64,14 @@
       left: -10px;
       color: #fff; }
     .timeliny .timeliny-dot::after {
-      display: none;
-      -webkit-transition: all 0.35s ease-in-out;
-      -moz-transition: all 0.35s ease-in-out;
-      transition: all 0.35s ease-in-out;
-      -ms-transform: translateY(-50%);
-      -webkit-transform: translateY(-50%);
-      transform: translateY(-50%);
-      content: attr(data-text);
+      content: '';
       position: absolute;
-      width: 256px;
-      top: 42.5px;
-      left: 10px;
-      color: #fff;
+      width: 5px;
+      height: 5px;
+      background-color: #FFD000;
       opacity: 0;
-      font-size: 0.9em; }
-      @media (min-width: 768px) {
-        .timeliny .timeliny-dot::after {
-          width: 341.33333px; } }
+      transform: scale(1.6);
+      border-radius: 50%; }
     .timeliny .timeliny-dot:hover {
       background-color: #FFD000; }
   .timeliny .timeliny-timeline {
@@ -97,18 +87,12 @@
       position: relative; }
       .timeliny .timeliny-timeline .timeliny-timeblock.active .timeliny-dot {
         background-color: #FFD000;
-        width: 8px;
-        height: 8px;
-        margin-top: -4px;
-        -webkit-box-shadow: 1px 1px 4px 0px rgba(0, 0, 0, 0.33);
-        -moz-box-shadow: 1px 1px 4px 0px rgba(0, 0, 0, 0.33);
-        box-shadow: 1px 1px 4px 0px rgba(0, 0, 0, 0.33);
-        left: 0; }
+        width: 5px;
+        height: 5px;
+        margin-top: -2.5px; }
         .timeliny .timeliny-timeline .timeliny-timeblock.active .timeliny-dot::before {
-          color: #fff;
-          top: -23px; }
+          color: #fff; }
         .timeliny .timeliny-timeline .timeliny-timeblock.active .timeliny-dot::after {
-          color: #fff;
           opacity: 1; }
       .timeliny .timeliny-timeline .timeliny-timeblock.inactive .timeliny-dot {
         cursor: move; }
@@ -124,7 +108,6 @@
   .timeliny .timeliny-vertical-line {
     position: absolute;
     display: block;
-    opacity: 0;
     z-index: 1;
     left: 25%;
     top: 0;

@@ -34,7 +34,8 @@
 			_createDots();
 			_fixBlockSizes();
 			_clickBehavior();
-      		_arrowBehavior();
+      _setupItemsDistance();
+      _arrowBehavior();
 			_createVerticalLine();
 			_updateTimelinePos();
 			_resizeBehavior();
@@ -61,10 +62,10 @@
 		 * @private
 		 */
 		function _loaded() {
-			$el.addClass('loaded');
-
 			var currYear = $el.find('.' + options.className + '-timeblock.active').first().attr('data-year');
 			hook('afterLoad', [currYear]);
+
+      $el.addClass('loaded');
 		}
 
 		/**
@@ -193,6 +194,22 @@
 				_updateTimelinePos('click');
 
 				return false;
+			});
+		}
+
+		/**
+		 * Setup margins from element to element
+		 * @private
+		 */
+		function _setupItemsDistance() {
+			var distance = options.distance || 30;
+
+			children.each(function(index) {
+				var currYear = $(this).attr('data-year');
+				var nextYear = $(this).next().attr('data-year');
+
+        var margin = (parseInt(nextYear, 10) - parseInt(currYear, 10)) * distance;
+        $(this).css('margin-right', margin);
 			});
 		}
 

@@ -8,22 +8,27 @@
   position: relative;
   display: block;
   margin: 0 auto 4rem;
-  padding: 10rem 0;
+  padding: 80px 0;
   width: 100%;
-  border-top: 1px solid #e5e5e5;
-  border-bottom: 1px solid #e5e5e5;
+  border-top: 1px solid white;
+  border-bottom: 1px solid white;
   font: normal normal 400 1rem/1 Arial, sans-serif;
   text-rendering: optimizeLegibility;
-  color: #ddd;
+  color: #fff;
   opacity: 0;
   overflow: hidden;
-  cursor: move; }
+  cursor: default; }
   .timeliny.loaded {
-    opacity: 1; }
+    transition: opacity 1s ease-out;
+    transition-delay: 0.5s;
+    opacity: 1;
+    border: 0;
+    padding: 3rem 0;
+    margin: 0; }
   .timeliny::before {
     content: '';
     position: absolute;
-    background-color: #e5e5e5;
+    background-color: #8D8D8D;
     width: 100%;
     height: 1px;
     top: 50%;
@@ -41,11 +46,11 @@
     position: absolute;
     top: 50%;
     left: 0;
-    margin-top: -0.6rem;
-    width: 1.2rem;
-    height: 1.2rem;
+    margin-top: -2.5px;
+    width: 5px;
+    height: 5px;
     border-radius: 50%;
-    border: 1px solid #ddd;
+    border: 0;
     background-color: #fff; }
     .timeliny .timeliny-dot::before {
       -webkit-transition: all 0.35s ease-in-out;
@@ -54,10 +59,12 @@
       content: attr(data-year);
       display: block;
       position: absolute;
-      top: -5rem;
-      left: 1.25rem;
-      color: #000; }
+      font-size: 12px;
+      top: -25px;
+      left: -10px;
+      color: #fff; }
     .timeliny .timeliny-dot::after {
+      display: none;
       -webkit-transition: all 0.35s ease-in-out;
       -moz-transition: all 0.35s ease-in-out;
       transition: all 0.35s ease-in-out;
@@ -65,62 +72,68 @@
       -webkit-transform: translateY(-50%);
       transform: translateY(-50%);
       content: attr(data-text);
-      display: block;
       position: absolute;
       width: 256px;
-      top: 5.6rem;
-      left: 1.25rem;
-      color: #ddd;
+      top: 42.5px;
+      left: 10px;
+      color: #fff;
       opacity: 0;
       font-size: 0.9em; }
       @media (min-width: 768px) {
         .timeliny .timeliny-dot::after {
           width: 341.33333px; } }
+    .timeliny .timeliny-dot:hover {
+      background-color: #FFD000; }
   .timeliny .timeliny-timeline {
     position: absolute;
     top: 50%;
     left: 0;
-    display: table;
+    display: flex;
     width: 100%;
     z-index: 5; }
     .timeliny .timeliny-timeline .timeliny-timeblock {
-      display: table-cell;
+      display: block;
+      margin-right: 85px;
       position: relative; }
       .timeliny .timeliny-timeline .timeliny-timeblock.active .timeliny-dot {
-        border-color: #37404A;
-        background-color: #37404A;
+        background-color: #FFD000;
+        width: 8px;
+        height: 8px;
+        margin-top: -4px;
         -webkit-box-shadow: 1px 1px 4px 0px rgba(0, 0, 0, 0.33);
         -moz-box-shadow: 1px 1px 4px 0px rgba(0, 0, 0, 0.33);
-        box-shadow: 1px 1px 4px 0px rgba(0, 0, 0, 0.33); }
+        box-shadow: 1px 1px 4px 0px rgba(0, 0, 0, 0.33);
+        left: 1px; }
         .timeliny .timeliny-timeline .timeliny-timeblock.active .timeliny-dot::before {
-          color: #37404A; }
+          color: #fff;
+          top: -23px; }
         .timeliny .timeliny-timeline .timeliny-timeblock.active .timeliny-dot::after {
-          color: #000;
+          color: #fff;
           opacity: 1; }
       .timeliny .timeliny-timeline .timeliny-timeblock.inactive .timeliny-dot {
         cursor: move; }
         .timeliny .timeliny-timeline .timeliny-timeblock.inactive .timeliny-dot::before {
-          color: #ddd; }
+          color: #fff; }
       .timeliny .timeliny-timeline .timeliny-timeblock:not(.inactive):not(.active) .timeliny-dot:hover {
-        border-color: #ddd;
-        background-color: #ddd; }
+        background-color: #FFD000; }
         .timeliny .timeliny-timeline .timeliny-timeblock:not(.inactive):not(.active) .timeliny-dot:hover::before {
-          color: #000; }
+          color: #fff; }
       .timeliny .timeliny-timeline .timeliny-timeblock .timeliny-dot:hover::after {
-        color: #000;
+        color: #fff;
         opacity: 1; }
   .timeliny .timeliny-vertical-line {
     position: absolute;
     display: block;
+    opacity: 0;
     z-index: 1;
-    left: 16%;
+    left: 25%;
     top: 0;
     width: 1px;
     height: 100%;
-    background-color: #ddd; }
+    background-color: #fff; }
     @media (min-width: 768px) {
       .timeliny .timeliny-vertical-line {
-        left: 32%; } }
+        left: 50%; } }
     .timeliny .timeliny-vertical-line::before {
       content: '';
       position: absolute;
@@ -130,7 +143,7 @@
       height: 0;
       border-left: 8px solid transparent;
       border-right: 8px solid transparent;
-      border-top: 8px solid #ddd; }
+      border-top: 8px solid #fff; }
     .timeliny .timeliny-vertical-line::after {
       content: '';
       position: absolute;
@@ -140,4 +153,4 @@
       height: 0;
       border-left: 8px solid transparent;
       border-right: 8px solid transparent;
-      border-bottom: 8px solid #ddd; }
+      border-bottom: 8px solid #fff; }

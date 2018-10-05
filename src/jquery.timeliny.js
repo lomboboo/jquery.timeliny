@@ -179,7 +179,7 @@
 		 * @private
 		 */
 		function _clickBehavior() {
-			children.parent().find('.' + options.className + '-timeblock:not(.inactive) .' + options.className + '-dot').on('click', function(e) {
+			children.parent().find('.' + options.className + '-timeblock:not(.inactive) .' + options.className + '-dot').on('click touchstart', function(e) {
 				e.preventDefault();
 
 				var currYear = $(this).parent().parent().find('.' + options.className + '-timeblock.active').attr('data-year');
@@ -268,17 +268,28 @@
 			var selected = null, x_pos = 0, x_elem = 0;
 
 			// Will be called when user starts dragging an element
-			function _drag_init(elem) {
+			function _drag_init(elem, e) {
+        if (e.targetTouches) {
+          var touch = e.targetTouches[0];
+          x_pos = touch.pageX
+				}
 				selected = elem;
 				x_elem = x_pos - selected.offsetLeft;
 			}
 
 			// Will be called when user dragging an element
 			function _move_elem(e) {
-				x_pos = document.all ? window.event.clientX : e.pageX;
-				if (selected !== null) {
-					selected.style.left = (x_pos - x_elem) + 'px';
+				if (e.targetTouches) {
+          var touch = e.targetTouches[0];
+          x_pos = touch.pageX;
+          selected.style.left = (touch.pageX - x_elem) + 'px';
+				} else {
+          x_pos = document.all ? window.event.clientX : e.pageX;
+          if (selected !== null) {
+            selected.style.left = (x_pos - x_elem) + 'px';
+          }
 				}
+
 			}
 
 			// Destroy the object when we are done
@@ -307,28 +318,28 @@
 
 			// Bind the functions...
 			if (options.draggedElement) {
-        $(options.draggedElement).on('mousedown', function() {
-          _drag_init($el.find('.'+ options.className +'-timeline')[0]);
+        $(options.draggedElement).on('mousedown touchstart', function(e) {
+          _drag_init($el.find('.'+ options.className +'-timeline')[0], e);
           return false;
         });
 
-        $(options.draggedElement).on('mousemove', function(e) {
+        $(options.draggedElement).on('mousemove touchmove', function(e) {
           _move_elem(e);
         });
 
-        $(options.draggedElement).on('mouseup', function() {
+        $(options.draggedElement).on('mouseup touchend', function() {
           _stop_move();
         });
 			} else {
-        $el.first().on('mousedown', function() {
-          _drag_init($el.find('.'+ options.className +'-timeline')[0]);
+        $el.first().on('mousedown touchstart', function(e) {
+          _drag_init($el.find('.'+ options.className +'-timeline')[0], e);
           return false;
         });
-        $(document).on('mousemove.timeliny', function(e) {
+        $(document).on('mousemove.timeliny touchmove.timeliny', function(e) {
           _move_elem(e);
         });
 
-        $(document).on('mouseup.timeliny', function() {
+        $(document).on('mouseup.timeliny touchend.timeliny', function() {
           _stop_move();
         });
 			}

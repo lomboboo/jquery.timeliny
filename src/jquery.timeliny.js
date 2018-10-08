@@ -357,7 +357,7 @@
       });
 
       if (e.targetTouches) {
-        distance = 0.5;
+        distance = options.swipeDistanceMobile || 0.5;
       }
 
       return closestValue(linePos, allDotsPos, directionRight, distance);

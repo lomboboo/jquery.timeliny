@@ -299,7 +299,7 @@
             selected.style.left = (x_pos - x_elem) + 'px';
           }
 				}
-        var closestDotYearIndex = getclosestDotYearIndex(e, directionRight);
+        var closestDotYearIndex = getClosestDotYearIndex(e, directionRight);
         var elements = $el.find('.' + options.className + '-dot');
         elements.removeClass('highlight');
         elements.eq(closestDotYearIndex).addClass('highlight');
@@ -308,7 +308,7 @@
 			// Destroy the object when we are done
 			function _stop_move(e) {
 				if (selected) {
-					var closestDotYearIndex = getclosestDotYearIndex(e, directionRight);
+					var closestDotYearIndex = getClosestDotYearIndex(e, directionRight);
           var closestElement = $el.find('.' + options.className + '-dot').eq(closestDotYearIndex);
           closestElement.removeClass('highlight');
           closestElement.trigger('click');
@@ -345,7 +345,7 @@
 			}
 		}
 
-		function getclosestDotYearIndex(e, directionRight) {
+		function getClosestDotYearIndex(e, directionRight) {
       var distance = 0;
       // active the closest elem
       var linePos = $el.find('.' + options.className + '-vertical-line').offset().left;
@@ -357,7 +357,7 @@
       });
 
       if (e.targetTouches) {
-        distance = 0.5;
+        distance = options.swipeDistanceMobile || 0.5;
       }
 
       return closestValue(linePos, allDotsPos, directionRight, distance);

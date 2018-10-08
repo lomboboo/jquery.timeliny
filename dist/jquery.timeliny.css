@@ -72,6 +72,7 @@
       font-size: 12px;
       top: -25px;
       left: -10px;
+      text-decoration: none;
       color: #fff; }
     .timeliny .timeliny-dot:hover {
       background-color: #FFD000; }

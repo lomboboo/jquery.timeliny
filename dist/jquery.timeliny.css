@@ -61,6 +61,7 @@
     height: 5px;
     border-radius: 50%;
     border: 0;
+    text-decoration: none;
     background-color: #fff; }
     .timeliny .timeliny-dot::before {
       -webkit-transition: all 0.35s ease-in-out;
@@ -68,11 +69,11 @@
       transition: all 0.35s ease-in-out;
       content: attr(data-year);
       display: block;
+      text-decoration: none;
       position: absolute;
       font-size: 12px;
       top: -25px;
       left: -10px;
-      text-decoration: none;
       color: #fff; }
     .timeliny .timeliny-dot:hover {
       background-color: #FFD000; }

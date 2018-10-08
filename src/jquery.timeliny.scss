@@ -91,6 +91,7 @@ $timeliny_small-breakdown: 768px;
 		height: $timeliny_dots-radius * 2;
 		border-radius: 50%;
 		border: 0;
+		text-decoration: none;
 		background-color: #fff;
 
 		&::before {
@@ -100,11 +101,11 @@ $timeliny_small-breakdown: 768px;
 
 			content: attr(data-year);
 			display: block;
+			text-decoration: none;
 			position: absolute;
 			font-size: 12px;
 			top: -25px;
 			left: -10px;
-			text-decoration: none;
 			color: $timeliny_text-color;
 		}
 

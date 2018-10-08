@@ -98,6 +98,8 @@
         margin-top: -2.5px; }
         .timeliny .timeliny-timeline .timeliny-timeblock.active .timeliny-dot::before {
           color: #fff; }
+      .timeliny .timeliny-timeline .timeliny-timeblock .timeliny-dot.highlight {
+        background-color: #FFD000; }
       .timeliny .timeliny-timeline .timeliny-timeblock.inactive .timeliny-dot {
         cursor: move; }
         .timeliny .timeliny-timeline .timeliny-timeblock.inactive .timeliny-dot::before {

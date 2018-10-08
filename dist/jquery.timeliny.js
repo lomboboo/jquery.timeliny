@@ -266,6 +266,8 @@
 		function _dragableTimeline() {
 
 			var selected = null, x_pos = 0, x_elem = 0;
+      var lastX;
+      var directionRight = true;
 
 			// Will be called when user starts dragging an element
 			function _drag_init(elem, e) {
@@ -283,35 +285,33 @@
           var touch = e.targetTouches[0];
           x_pos = touch.pageX;
           selected.style.left = (touch.pageX - x_elem) + 'px';
+
+          var currentX = e.originalEvent.touches[0].clientX;
+          if(currentX > lastX){
+            directionRight = false;
+          }else if(currentX < lastX){
+            directionRight = true;
+          }
+          lastX = currentX;
 				} else {
           x_pos = document.all ? window.event.clientX : e.pageX;
           if (selected !== null) {
             selected.style.left = (x_pos - x_elem) + 'px';
           }
 				}
-
+        var closestDotYearIndex = getclosestDotYearIndex(e, directionRight);
+        var elements = $el.find('.' + options.className + '-dot');
+        elements.removeClass('highlight');
+        elements.eq(closestDotYearIndex).addClass('highlight');
 			}
 
 			// Destroy the object when we are done
-			function _stop_move() {
+			function _stop_move(e) {
 				if (selected) {
-					// active the closest elem
-					var linePos = $el.find('.' + options.className + '-vertical-line').offset().left;
-					var closestDotYear = null;
-					var diff = 99999999999999999999999;
-
-					children.parent().find('.' + options.className + '-timeblock:not(.inactive) .' + options.className + '-dot').each(function (index) {
-						var currDotPos = $(this).offset().left;
-						var currDiff = Math.abs(currDotPos - linePos);
-
-						if (currDiff < diff) {
-							console.log($(this).attr('data-year'));
-							closestDotYear = $(this).attr('data-year');
-							diff = currDiff;
-						}
-					});
-
-					$el.find('.' + options.className + '-dot[data-year=' + closestDotYear + ']').trigger('click');
+					var closestDotYearIndex = getclosestDotYearIndex(e, directionRight);
+          var closestElement = $el.find('.' + options.className + '-dot').eq(closestDotYearIndex);
+          closestElement.removeClass('highlight');
+          closestElement.trigger('click');
 					selected = null;
 				}
 			}
@@ -327,8 +327,8 @@
           _move_elem(e);
         });
 
-        $(options.draggedElement).on('mouseup touchend', function() {
-          _stop_move();
+        $(options.draggedElement).on('mouseup touchend', function(e) {
+          _stop_move(e);
         });
 			} else {
         $el.first().on('mousedown touchstart', function(e) {
@@ -339,10 +339,28 @@
           _move_elem(e);
         });
 
-        $(document).on('mouseup.timeliny touchend.timeliny', function() {
-          _stop_move();
+        $(document).on('mouseup.timeliny touchend.timeliny', function(e) {
+          _stop_move(e);
         });
 			}
+		}
+
+		function getclosestDotYearIndex(e, directionRight) {
+      var distance = 0;
+      // active the closest elem
+      var linePos = $el.find('.' + options.className + '-vertical-line').offset().left;
+      var allDotsPos = [];
+
+      children.parent().find('.' + options.className + '-timeblock:not(.inactive) .' + options.className + '-dot').each(function (index) {
+        var currDotPos = $(this).offset().left;
+        allDotsPos.push({ currDotPos: currDotPos, index: index });
+      });
+
+      if (e.targetTouches) {
+        distance = 0.5;
+      }
+
+      return closestValue(linePos, allDotsPos, directionRight, distance);
 		}
 
 		/**
@@ -355,6 +373,45 @@
 				selector.trigger('click');
 			}
 		}
+
+    function closestValue(v, bandwidthSteps, directionRight, distance) {
+      var value;
+
+      bandwidthSteps.some(function (a, index, array) {
+      	var nextEl = null;
+				if (!array[index + 1]) {
+					if (directionRight) {
+            value = array[array.length - 1].index;
+					} else {
+            value = array[0].index;
+					}
+
+          return true;
+				} else {
+          nextEl = array[index + 1];
+				}
+
+        var delta = Math.abs(v - a.currDotPos);
+        var diff = nextEl.currDotPos - a.currDotPos;
+        var half = diff / 2;
+        var velocity = directionRight ? half - half * distance : half + half * distance;
+        var isBetween = a.currDotPos < v && v < nextEl.currDotPos;
+
+        if (isBetween) {
+        	if (delta > velocity) {
+            value = a.index + 1;
+					} else {
+            value = a.index;
+					}
+
+          return true;
+        }
+
+
+      });
+
+      return value;
+    }
 
 		/**
 		 * Get/set options.

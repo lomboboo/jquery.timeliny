@@ -144,6 +144,12 @@ $timeliny_small-breakdown: 768px;
 				}
 			}
 
+			.#{$timeliny_classname}-dot {
+				&.highlight {
+					background-color: $timeliny_active-color;
+				}
+			}
+
 			&.inactive {
 				.#{$timeliny_classname}-dot {
 					cursor: move;

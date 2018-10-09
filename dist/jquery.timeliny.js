@@ -273,7 +273,9 @@
 			function _drag_init(elem, e) {
         if (e.targetTouches) {
           var touch = e.targetTouches[0];
-          x_pos = touch.pageX
+          x_pos = touch.pageX;
+
+          directionRight = undefined;
 				}
 				selected = elem;
 				x_elem = x_pos - selected.offsetLeft;
@@ -300,11 +302,13 @@
             selected.style.left = (x_pos - x_elem) + 'px';
           }
           var currentPageX = e.pageX;
+
           if(currentPageX > lastX){
             directionRight = false;
-          }else if(currentPageX < lastX){
+          } else if(currentPageX < lastX){
             directionRight = true;
           }
+
           lastX = currentPageX;
 
           var closestDotYearIndex = getClosestDotYearIndex(e, directionRight);
@@ -319,7 +323,6 @@
 				if (selected) {
 					var closestDotYearIndex = getClosestDotYearIndex(e, directionRight);
           var closestElement = $el.find('.' + options.className + '-dot').eq(closestDotYearIndex);
-          console.log('closestElement', closestElement);
           closestElement.removeClass('highlight');
           closestElement.trigger('click');
 					selected = null;
@@ -389,6 +392,9 @@
       if (typeof activeIndex !== 'undefined') {
 				var next = !bandwidthSteps[activeIndex + 1] ? activeIndex : activeIndex + 1;
 				var prev = !bandwidthSteps[activeIndex - 1] ? activeIndex : activeIndex - 1;
+
+				if (typeof directionRight === 'undefined') return activeIndex;
+
         return directionRight ? next : prev;
       }
       var value;

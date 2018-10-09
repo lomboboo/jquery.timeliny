@@ -281,6 +281,7 @@
 
 			// Will be called when user dragging an element
 			function _move_elem(e) {
+				/* if touch event / mobile */
 				if (e.targetTouches) {
           var touch = e.targetTouches[0];
           x_pos = touch.pageX;
@@ -298,11 +299,19 @@
           if (selected !== null) {
             selected.style.left = (x_pos - x_elem) + 'px';
           }
+          var currentPageX = e.pageX;
+          if(currentPageX > lastX){
+            directionRight = false;
+          }else if(currentPageX < lastX){
+            directionRight = true;
+          }
+          lastX = currentPageX;
+
+          var closestDotYearIndex = getClosestDotYearIndex(e, directionRight);
+          var elements = $el.find('.' + options.className + '-dot');
+          elements.removeClass('highlight');
+          elements.eq(closestDotYearIndex).addClass('highlight');
 				}
-        var closestDotYearIndex = getClosestDotYearIndex(e, directionRight);
-        var elements = $el.find('.' + options.className + '-dot');
-        elements.removeClass('highlight');
-        elements.eq(closestDotYearIndex).addClass('highlight');
 			}
 
 			// Destroy the object when we are done
@@ -310,6 +319,7 @@
 				if (selected) {
 					var closestDotYearIndex = getClosestDotYearIndex(e, directionRight);
           var closestElement = $el.find('.' + options.className + '-dot').eq(closestDotYearIndex);
+          console.log('closestElement', closestElement);
           closestElement.removeClass('highlight');
           closestElement.trigger('click');
 					selected = null;
@@ -346,8 +356,8 @@
 		}
 
 		function getClosestDotYearIndex(e, directionRight) {
-      var distance = 0;
       // active the closest elem
+			var distance = 0;
       var linePos = $el.find('.' + options.className + '-vertical-line').offset().left;
       var allDotsPos = [];
 
@@ -357,7 +367,8 @@
       });
 
       if (e.targetTouches) {
-        distance = options.swipeDistanceMobile || 0.5;
+      	var activeIndex = children.parent().find('.' + options.className + '-timeblock.active').index();
+        return closestValue(linePos, allDotsPos, directionRight, distance, activeIndex);
       }
 
       return closestValue(linePos, allDotsPos, directionRight, distance);
@@ -374,7 +385,12 @@
 			}
 		}
 
-    function closestValue(v, bandwidthSteps, directionRight, distance) {
+    function closestValue(v, bandwidthSteps, directionRight, distance, activeIndex) {
+      if (typeof activeIndex !== 'undefined') {
+				var next = !bandwidthSteps[activeIndex + 1] ? activeIndex : activeIndex + 1;
+				var prev = !bandwidthSteps[activeIndex - 1] ? activeIndex : activeIndex - 1;
+        return directionRight ? next : prev;
+      }
       var value;
 
       bandwidthSteps.some(function (a, index, array) {
@@ -398,7 +414,7 @@
         var isBetween = a.currDotPos < v && v < nextEl.currDotPos;
 
         if (isBetween) {
-        	if (delta > velocity) {
+        	if (delta >= velocity) {
             value = a.index + 1;
 					} else {
             value = a.index;
@@ -406,8 +422,6 @@
 
           return true;
         }
-
-
       });
 
       return value;

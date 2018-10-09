@@ -340,7 +340,7 @@
           _move_elem(e);
         });
 
-        $(options.draggedElement).on('mouseup touchend', function(e) {
+        $(document).on('mouseup touchend', function(e) {
           _stop_move(e);
         });
 			} else {
@@ -401,8 +401,9 @@
 
       bandwidthSteps.some(function (a, index, array) {
       	var nextEl = null;
+
 				if (!array[index + 1]) {
-					if (directionRight) {
+					if (v >= a.currDotPos) {
             value = array[array.length - 1].index;
 					} else {
             value = array[0].index;

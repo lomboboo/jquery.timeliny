@@ -65,7 +65,7 @@
 			var currYear = $el.find('.' + options.className + '-timeblock.active').first().attr('data-year');
 			hook('afterLoad', [currYear]);
 
-      $el.addClass('loaded');
+      		$el.addClass('loaded');
 		}
 
 		/**
